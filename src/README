@@ -1,0 +1,112 @@
+switch是矿场管理程序，目前主要管理cell的登录，命令下发，向dataserver上发数据。
+
+*************************************************
+Compile:
+    $ cd src/
+    $ make clean
+    $ make
+
+*************************************************
+
+*************************************************
+Directory tree
+-alarm:报警相关文件。
+    -alarm_pro.c:目前主要记录cell的通信中断和中断恢复，记录到switch_db.alarm_log数据库中，同时也记录到switch_debug.log文件中。
+
+-ap_error:系统模块文件，主要是TCP通信时会调用此文件，不需要修改。
+	
+-api_comm:系统功能文件。
+    -api_login.c:登录文件，主要是从缓冲区队列里面解析cell信息，打包发送cell系统设置信息。
+    -api_command.c:向cell发送命令接口，接受命令确认信息到缓冲队列，解析相应的缓冲命令，接受登录命令到缓冲区队列。
+    -api_monitor.c:与dataserver通信文件。
+    -api_shell_terminal.c:shell terminal命令通信接口，用于矿机调试人员使用。
+    -def_devstr.h:定义了此文件下公共结构体，宏，还有函数声明。
+
+-api_net:系统模块文件，TCP通信，UDP通信时使用，一般不需要修改。
+    -connection_pool:TCP通信时使用。
+    -api_net.c:UDP通信时使用。
+    
+-app:定义公共变量，结构体，宏，还有函数文件。
+    -debug.c:调试信息开启于关闭文件。
+    -paramdefs.c:公共函数。
+    -typedefs.h:全局宏定义。
+
+-cJSON:系统模块文件，负责解析或打包Json，不需要修改。
+
+-db_op:数据库操作文件。
+    -db_mysql.c:包括数据库的表创建、增加、删除、修改和查找，数据初始化到list，定时检查数据库的连接。
+
+-download:初始化配置文件，包括本机ip，dataserver的IP和Port，数据库的相关信息。
+    -CfgData.ini:配置文件。
+    -download.c:读取CfgData.ini。
+
+-fifo_queue:系统模块文件，数据缓冲队列，一般不需要修改。
+    -circular_queue.c:循环队列。
+    -fifo_queue.c:fifo队列。
+
+-list:系统模块文件，链表，一般不需要修改。
+    -uthash:哈希链表。
+    -list.c/list_iterator.c/list_node.c:普通链表。
+    
+-md5:系统模块文件，MD5验证，不需要修改。
+
+-ap_log.c/ap_str.c/ap_utils.c:系统模块文件，打印switch_debug.log文件时调用，不需要修改。
+
+-main.c:主函数。
+
+-monitor.sh:自动重启脚本文件
+
+-killSwitch.sh:杀死当前的进程文件。
+	
+*************************************************
+
+*************************************************
+具体操作请看doc/下的
+<<矿场管理使用手册>>
+
+*************************************************
+
+*************************************************
+    首先加载CfgData.ini文件
+            |
+            |
+           \|/
+    初始化database
+            |
+            |
+           \|/
+    启动接受Login和command进程
+            |
+            |
+           \|/
+    启动login解析和数据打包进程
+            |
+            |
+           \|/
+    启动command打包进程    
+            |
+            |
+           \|/    
+    启动command解析进程
+            |
+            |
+           \|/
+    启动Shell Terminal终端进程
+            |
+            |
+           \|/
+    启动报警进程
+            |
+            |
+           \|/
+    启动数据库进程
+            |
+            |
+           \|/
+    启动与dataserver通信进程(monitor)       
+    
+
+具体详细流程图请看doc/下的
+<<矿场管理监控软件原理与程序流程图>>
+*************************************************
+

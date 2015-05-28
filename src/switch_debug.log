@@ -1,0 +1,20 @@
+
++---------------------------------------------------------+ 
+|    Hello, switch_network @ May  8 2015 17:03:18         | 
++---------------------------------------------------------+ 
+[2015-05-08 17:03:45]
+		circular_queue.c, cirqueue_create, 54, cirqueue_create Generated the que!
+[2015-05-08 17:03:45]
+		circular_queue.c, cirqueue_create, 54, cirqueue_create Generated the que!
+[2015-05-08 17:03:45]
+		switch_db.pool_conf database connection is successful!
+[2015-05-08 17:03:45]
+		switch_db.switch_base database connection is successful!
+[2015-05-08 17:03:45]
+		cell.cell_base database connection is successful!
+[2015-05-08 17:03:45]
+		cell.cell_status database connection is successful!
+[2015-05-08 17:03:45]
+		switch_db.alarm_log database connection is successful!
+[2015-05-08 17:03:49]
+		api_monitor.c, ParseConn, 4738, "conn" is error!
